@@ -9,19 +9,33 @@ The effects will be executed sequentially.
 ### INDIVIDUAL METHODS
 
 add_video(path: str)
+
 cut(start: float, end: float) (in seconds)
+
 grayscale(start: float, end: float)
+
 image(start: float, end: float, img: str, pos: Tuple[float, float, float, float]) (pos: width_start, height_start, width_stop, height_stop; in %)
+
 chromakey(start: float, end: float, img: str, color: Tuple[int, int, int], similarity: int) (color is the one we are trying to filter out)
+
 shaky_cam(start: float, end: float) 
+
 zoom(start: float, end: float, pos: Tuple[float, float, float, float]) (works same as image)
+
 flip(start: float, end: float, axis: Literal[0, 1, -1]) (0 - vertically, 1 - horizontally, -1 - both)
+
 rotate(start: float, end: float, rotation: int) (in degrees)
+
 blur(start: float, end: float, intensity: int) (recommended range for intensity is 1 - 50)
+
 glitch(start: float, end: float)
+
 scan_lines(start: float, end: float)
+
 snow(start: float, end: float)
+
 render(path: str, width: int, height: int, framerate: float, short: bool) (Short makes the whole video shorter by deleting similar frames in a row)
+
 
 ## PROGRAM EXPLAINED
 
