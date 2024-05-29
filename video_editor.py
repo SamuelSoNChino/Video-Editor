@@ -75,13 +75,15 @@ class VideoEditor:
                 return False
             pixel_differences = np.abs(frame_1 - frame_2)
             total_difference = np.sum(pixel_differences)
-            similarity = (765 - total_difference / (frame_1.shape[0] * frame_1.shape[1])) / 765
+            similarity = (765 - total_difference /
+                          (frame_1.shape[0] * frame_1.shape[1])) / 765
             return similarity > 0.9
 
         def apply_effects_to_frame(original_frame: Frame_t, current_frame_number: float,
                                    frame_rate: float) -> Frame_t:
             def apply_grayscale(frame_to_modify):
-                modified_frame = cv.cvtColor(frame_to_modify, cv.COLOR_BGR2GRAY)
+                modified_frame = cv.cvtColor(
+                    frame_to_modify, cv.COLOR_BGR2GRAY)
                 return cv.cvtColor(modified_frame, cv.COLOR_GRAY2BGR)
 
             def apply_chromakey(frame_to_modify: Frame_t, image_path: str, color_rgb: Tuple[int, int, int],
@@ -93,10 +95,12 @@ class VideoEditor:
                         self.errors.append(image_message)
                     return frame_to_modify
                 else:
-                    resized_image = cv.resize(image, (frame_to_modify.shape[1], frame_to_modify.shape[0]))
+                    resized_image = cv.resize(
+                        image, (frame_to_modify.shape[1], frame_to_modify.shape[0]))
                     color_bgr = np.flip(color_rgb)
                     modified_frame = np.copy(frame_to_modify)
-                    pixel_differences = np.sum(np.abs(frame_to_modify - color_bgr), axis=2)
+                    pixel_differences = np.sum(
+                        np.abs(frame_to_modify - color_bgr), axis=2)
                     mask = pixel_differences < similarity
                     modified_frame[mask] = resized_image[mask]
                     return modified_frame
@@ -118,9 +122,12 @@ class VideoEditor:
                         self.errors.append(image_message)
                     return frame_to_modify
                 else:
-                    image_width = round(frame_to_modify.shape[1] * (position[2] - position[0]))
-                    image_height = round(frame_to_modify.shape[0] * (position[3] - position[1]))
-                    resized_image = cv.resize(image, (image_width, image_height))
+                    image_width = round(
+                        frame_to_modify.shape[1] * (position[2] - position[0]))
+                    image_height = round(
+                        frame_to_modify.shape[0] * (position[3] - position[1]))
+                    resized_image = cv.resize(
+                        image, (image_width, image_height))
                     modified_frame = np.copy(frame_to_modify)
                     x1 = round(position[1] * modified_frame.shape[0])
                     x2 = round(position[3] * modified_frame.shape[0])
@@ -128,7 +135,8 @@ class VideoEditor:
                     y2 = round(position[2] * modified_frame.shape[1])
                     if image.shape[2] == 4:
                         mask = resized_image[:, :, 3] > 0
-                        modified_frame[x1: x2, y1: y2][mask] = resized_image[:, :, :3][mask]
+                        modified_frame[x1: x2,
+                                       y1: y2][mask] = resized_image[:, :, :3][mask]
                     else:
                         modified_frame[x1: x2, y1: y2] = resized_image
                     return modified_frame
@@ -147,12 +155,14 @@ class VideoEditor:
 
             def apply_rotate(frame_to_modify: Frame_t, rotation: int) -> Frame_t:
                 # Tu som sa trochu inšpiroval chatGPT
-                center = (frame_to_modify.shape[1] / 2, frame_to_modify.shape[0] / 2)
+                center = (frame_to_modify.shape[1] / 2,
+                          frame_to_modify.shape[0] / 2)
                 matrix = cv.getRotationMatrix2D(center, rotation, 1)
                 modified_frame = cv.warpAffine(frame_to_modify, matrix, (frame_to_modify.shape[1],
                                                                          frame_to_modify.shape[0]))
                 # Odtiaľto je zase čisto môj kód
-                mask = (np.sum(frame_to_modify, axis=2) != 0) & (np.sum(modified_frame, axis=2) == 0)
+                mask = (np.sum(frame_to_modify, axis=2) != 0) & (
+                    np.sum(modified_frame, axis=2) == 0)
                 snow = cv.cvtColor(np.random.randint(0, 256, frame_to_modify.shape[:2], dtype=np.uint8),
                                    cv.COLOR_GRAY2BGR)
                 modified_frame[mask] = snow[mask]
@@ -160,8 +170,10 @@ class VideoEditor:
 
             def apply_blur(frame_to_modify: Frame_t, intensity: int) -> Frame_t:
                 kernel_size = intensity + 2
-                kernel = np.ones((kernel_size, kernel_size), np.uint8) / (kernel_size ** 2)
-                modified_frame = cv.filter2D(np.copy(frame_to_modify), -1, kernel)
+                kernel = np.ones((kernel_size, kernel_size),
+                                 np.uint8) / (kernel_size ** 2)
+                modified_frame = cv.filter2D(
+                    np.copy(frame_to_modify), -1, kernel)
                 return modified_frame
 
             def apply_glitch(frame_to_modify: Frame_t) -> Frame_t:
@@ -172,22 +184,27 @@ class VideoEditor:
                 block_size_y = frame_to_modify.shape[0] // 10
                 for i in range(0, frame_to_modify.shape[0], block_size_y):
                     for j in range(0, frame_to_modify.shape[1], block_size_x):
-                        block = modified_frame[i:i + block_size_y, j:j + block_size_x]
+                        block = modified_frame[i:i +
+                                               block_size_y, j:j + block_size_x]
                         np.random.shuffle(block)
-                        modified_frame[i:i + block_size_y, j:j + block_size_x] = block
+                        modified_frame[i:i + block_size_y,
+                                       j:j + block_size_x] = block
                 return modified_frame
 
             def apply_scan_lines(frame_to_modify: Frame_t, number: float) -> Frame_t:
                 modified_frame = np.copy(frame_to_modify)
                 shift = round(number) % 2
                 for i in range(shift, frame_to_modify.shape[0]):
-                    scan_line = np.random.randint(0, 256, (frame_to_modify.shape[1], 3), dtype=np.uint8)
+                    scan_line = np.random.randint(
+                        0, 256, (frame_to_modify.shape[1], 3), dtype=np.uint8)
                     transparency = random.randint(3, 9) / 10
-                    modified_frame[i] = cv.addWeighted(modified_frame[i], transparency, scan_line, 1 - transparency, 0)
+                    modified_frame[i] = cv.addWeighted(
+                        modified_frame[i], transparency, scan_line, 1 - transparency, 0)
                 return modified_frame
 
             def apply_snow(frame_to_modify: Frame_t) -> Frame_t:
-                modified_frame = np.random.randint(0, 256, frame_to_modify.shape[:2], dtype=np.uint8)
+                modified_frame = np.random.randint(
+                    0, 256, frame_to_modify.shape[:2], dtype=np.uint8)
                 return cv.cvtColor(modified_frame, cv.COLOR_GRAY2BGR)
 
             current_second = current_frame_number / frame_rate
@@ -197,28 +214,36 @@ class VideoEditor:
                     if effect[0] == "g":
                         frame_to_process = apply_grayscale(frame_to_process)
                     elif effect[0] == "ch":
-                        frame_to_process = apply_chromakey(frame_to_process, effect[3], effect[4], effect[5])
+                        frame_to_process = apply_chromakey(
+                            frame_to_process, effect[3], effect[4], effect[5])
                     elif effect[0] == "s":
                         frame_to_process = apply_shaky_cam(frame_to_process)
                     elif effect[0] == "i":
-                        frame_to_process = apply_image(frame_to_process, effect[3], effect[4])
+                        frame_to_process = apply_image(
+                            frame_to_process, effect[3], effect[4])
                     elif effect[0] == "z":
-                        frame_to_process = apply_zoom(frame_to_process, effect[3])
+                        frame_to_process = apply_zoom(
+                            frame_to_process, effect[3])
                     elif effect[0] == "f":
-                        frame_to_process = apply_flip(frame_to_process, effect[3])
+                        frame_to_process = apply_flip(
+                            frame_to_process, effect[3])
                     elif effect[0] == "r":
-                        frame_to_process = apply_rotate(frame_to_process, effect[3])
+                        frame_to_process = apply_rotate(
+                            frame_to_process, effect[3])
                     elif effect[0] == "b":
-                        frame_to_process = apply_blur(frame_to_process, effect[3])
+                        frame_to_process = apply_blur(
+                            frame_to_process, effect[3])
                     elif effect[0] == "gl":
                         frame_to_process = apply_glitch(frame_to_process)
                     elif effect[0] == "sl":
-                        frame_to_process = apply_scan_lines(frame_to_process, current_frame_number)
+                        frame_to_process = apply_scan_lines(
+                            frame_to_process, current_frame_number)
                     elif effect[0] == "sn":
                         frame_to_process = apply_snow(frame_to_process)
             return frame_to_process
 
-        final_video = cv.VideoWriter(path, cv.VideoWriter.fourcc(*"mp4v"), framerate, (width, height), True)
+        final_video = cv.VideoWriter(path, cv.VideoWriter.fourcc(
+            *"mp4v"), framerate, (width, height), True)
         frame_number = 0.0
         previous_frame = np.zeros(1, dtype=np.uint8)
 
@@ -240,7 +265,8 @@ class VideoEditor:
                     ret, frame = current_video.read()
                     if not ret:
                         break
-                    processed_frame = apply_effects_to_frame(cv.resize(frame, (width, height)), frame_number, framerate)
+                    processed_frame = apply_effects_to_frame(
+                        cv.resize(frame, (width, height)), frame_number, framerate)
                     if not (short and are_similar(processed_frame, previous_frame)) and not cut:
                         previous_frame = processed_frame
                         frames_to_process += frame_rate_ratio
@@ -264,4 +290,4 @@ class VideoEditor:
 
 
 if __name__ == "__main__":
-    pass
+    VideoEditor().add_video("C:/Users/samko/Documents/Python/KSI23/2.Vlna/velke_ulohy/VideoEditor/ukazky/clean.mp4").cut(5, 10).cut(17.5, 20).render("video_cut.mp4", 426, 240, 25)
