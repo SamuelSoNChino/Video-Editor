@@ -1,42 +1,151 @@
 # Video-Editor
-The program allows you to edit videos on a basic level using methods of a VideoEditor class.
 
-## HOW TO USE
+A lightweight Python-based video editing tool using OpenCV and NumPy. This program provides a simple API for applying basic video effects, trimming, and exporting videos. Designed with a builder pattern, the VideoEditor class allows for seamless method chaining, making video editing straightforward and intuitive.
 
-The methods are to be used in a chain, with first method being add_video and last one being render. An example use: VideoEditor().add_video("lol.mp4").add_video("video2.mp4").shaky_cam(2,5).render("combination.mp4", 360, 178, 30, short=False)
-The effects will be executed sequentially.
+## Features
 
-### INDIVIDUAL METHODS
+- Chainable methods for clean, expressive editing pipelines.
 
-add_video(path: str)
+- Support for multiple effects, including:
 
-cut(start: float, end: float) (in seconds)
+    - Grayscale, chromakey, blur, zoom, and rotate.
 
-grayscale(start: float, end: float)
+    - Fun effects like shaky cam, glitch, scan lines, and snow.
 
-image(start: float, end: float, img: str, pos: Tuple[float, float, float, float]) (pos: width_start, height_start, width_stop, height_stop; in %)
+- Trim videos by cutting specific sections.
 
-chromakey(start: float, end: float, img: str, color: Tuple[int, int, int], similarity: int) (color is the one we are trying to filter out)
+- Add images or overlays to videos.
 
-shaky_cam(start: float, end: float) 
+- Optimize video size by removing similar consecutive frames.
 
-zoom(start: float, end: float, pos: Tuple[float, float, float, float]) (works same as image)
+- Compatible with MP4 output format.
 
-flip(start: float, end: float, axis: Literal[0, 1, -1]) (0 - vertically, 1 - horizontally, -1 - both)
+## Installation
 
-rotate(start: float, end: float, rotation: int) (in degrees)
+**Clone the repository**:
 
-blur(start: float, end: float, intensity: int) (recommended range for intensity is 1 - 50)
+    git clone https://github.com/SamuelSoNChino/Video-Editor.git
+    cd Video-Editor
 
-glitch(start: float, end: float)
+**Install dependencies**:
 
-scan_lines(start: float, end: float)
+    pip install numpy opencv-python
 
-snow(start: float, end: float)
+## Quick Start
 
-render(path: str, width: int, height: int, framerate: float, short: bool) (Short makes the whole video shorter by deleting similar frames in a row)
+    `from video_editor import VideoEditor
+
+    # Example usage:
+    VideoEditor() \
+        .add_video("input.mp4") \
+        .grayscale(0, 10) \
+        .shaky_cam(5, 7) \
+        .cut(15, 20) \
+        .render("output.mp4", 640, 360, 30)`
+
+### Chainable Editing Methods
+
+- `add_video(path: str)`
+
+    Adds a video to the editing pipeline.
+
+- `cut(start: float, end: float)`
+
+    Trims a specific section of the video (in seconds).
+
+- `grayscale(start: float, end: float)`
+
+    Converts frames to grayscale within the specified time range.
+
+- `chromakey(start: float, end: float, img: str, color: Tuple[int, int, int], similarity: int)`
+
+    Replaces a specific color in the video with a given image.
+
+    Parameters:
+
+    `img`: Path to the replacement image.
+
+    `color`: RGB tuple of the color to filter.
+
+    `similarity`: Threshold for color matching.
 
 
-## PROGRAM EXPLAINED
+- `shaky_cam(start: float, end: float)`
+    
+    Adds a "shaky camera" effect to simulate motion.
 
-The program is based on builder pattern, with methods always returning the class itself, to allow chain editing. The editing process works sequentially, frame by frame, applying efects or duplicating or removing frames when needed. The effects are mostly implemented with simple calculations using numpy and opencv.
+- `zoom(start: float, end: float, pos: Tuple[float, float, float, float])`
+
+    Zooms into a specific area of the frame.
+
+    Parameters:
+
+    `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.
+
+- `image(start: float, end: float, img: str, pos: Tuple[float, float, float, float])`
+
+
+    Overlays an image on the video at a specific position.
+
+    Parameters:
+
+    `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.
+
+- `flip(start: float, end: float, axis: Literal[0, 1, -1])`
+
+    Flips the video:
+
+    `0`: Vertically
+
+    `1`: Horizontally
+
+    `-1`: Both
+
+- `rotate(start: float, end: float, rotation: int)`
+
+    Rotates the video by a specified angle (in degrees).
+
+- `blur(start: float, end: float, intensity: int)`
+
+    Blurs frames within the given time range.
+
+    Recommended intensity: 1–50.
+
+- `glitch(start: float, end: float)`
+    
+    Adds a random glitch effect.
+
+- `scan_lines(start: float, end: float)`
+
+    Adds scan lines to create a retro effect.
+
+- `snow(start: float, end: float)`
+
+    Simulates snow-like static noise.
+
+- `render(path: str, width: int, height: int, framerate: float, short: bool = False)`
+
+    Exports the final video to the specified path.
+
+    Parameters:
+
+    `short`: Removes similar frames to reduce file size.
+
+## Example Pipeline
+
+    VideoEditor() \
+        .add_video("video1.mp4") \
+        .add_video("video2.mp4") \
+        .grayscale(0, 5) \
+        .chromakey(5, 10, "background.png", (0, 255, 0), 50) \
+        .shaky_cam(10, 15) \
+        .blur(15, 20, intensity=10) \
+        .render("final_output.mp4", width=1280, height=720, framerate=30)
+
+## Implementation Details
+
+- Built using OpenCV for video processing and NumPy for efficient matrix operations.
+
+- Effects are applied frame-by-frame to ensure precision and flexibility.
+
+- Supports real-time preview of the rendering process (press q to exit preview).
