@@ -1,8 +1,8 @@
-# Video-Editor
+2# Video-Editor
 
 A lightweight Python-based video editing tool using OpenCV and NumPy. This program provides a simple interface for applying basic video effects, trimming, and exporting videos. Designed with a builder pattern, the VideoEditor class allows for seamless method chaining, making video editing straightforward and intuitive.
 
-[Quick Showcase in Terminal](https://www.youtube.com/watch?v=jYDddUVu9Mc)
+[Quick Showcase of the project being used with Terminal](https://youtu.be/qym4_PWdxm8)
 
 >This was one of my earlier projects, so there are parts I would refactor. For example, the monolithic `render` method. I might look into it in the future.
 
@@ -135,7 +135,9 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
 
     `short`: Removes similar frames to reduce file size.
 
-## Example Pipeline
+## Example Pipelines
+
+Using the builder pattern:
 
     VideoEditor() \
         .add_video("video1.mp4") \
@@ -145,6 +147,18 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
         .shaky_cam(10, 15) \
         .blur(15, 20, intensity=10) \
         .render("final_output.mp4", width=1280, height=720, framerate=30)
+
+Or using methods individually in Python interpreter:
+
+    >>> ve = VideoEditor()
+    >>> ve.add_video("video1.mp4")
+    >>> ve.add_video("video2.mp4")
+    >>> ve.grayscale(0, 5)
+    >>> ve.chromakey(5, 10, "background.png", (0, 255, 0), 50)
+    >>> ve.shaky_cam(10, 15)
+    >>> ve.blur(15, 20, intensity=10)
+    >>> ve.render("final_output.mp4", width=1280, height=720, framerate=30)
+
 
 ## Implementation Details
 
