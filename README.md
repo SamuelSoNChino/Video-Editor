@@ -35,7 +35,7 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
 
 ## Quick Start
 
-    `from video_editor import VideoEditor
+    from video_editor import VideoEditor
 
     # Example usage:
     VideoEditor() \
@@ -43,7 +43,7 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
         .grayscale(0, 10) \
         .shaky_cam(5, 7) \
         .cut(15, 20) \
-        .render("output.mp4", 640, 360, 30)`
+        .render("output.mp4", 640, 360, 30)
 
 ### Chainable Editing Methods
 
