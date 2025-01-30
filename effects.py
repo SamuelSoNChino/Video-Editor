@@ -1,9 +1,8 @@
 import cv2 as cv
+from cv2.typing import MatLike
 import numpy as np
-import numpy.typing as npt
 
-Frame_t = npt.NDArray[np.uint8]
-Pixel_t = npt.NDArray[np.uint8]
+
 Color = tuple[int, int, int]
 
 
@@ -16,7 +15,7 @@ class GrayscaleEffect(Efect):
         self.start = start
         self.end = end
 
-    def apply(self, frame: Frame_t, current_second: float) -> Frame_t:
+    def apply(self, frame: MatLike, current_second: float) -> MatLike:
         if self.start <= current_second < self.end:
             frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
             frame = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)
@@ -35,7 +34,7 @@ class ChromakeyEffect(Efect):
         if self.image is None:
             print(f'ERROR: Image at: {image_path} not found.')
 
-    def apply(self, frame: Frame_t, current_second: float) -> Frame_t:
+    def apply(self, frame: MatLike, current_second: float) -> MatLike:
         if self.start <= current_second < self.end:
             if self.image is None:
                 return frame  # Skip if image is not loaded
