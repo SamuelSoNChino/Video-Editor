@@ -1,3 +1,4 @@
+import random
 import cv2 as cv
 from cv2.typing import MatLike
 import numpy as np
@@ -45,4 +46,19 @@ class ChromakeyEffect(Efect):
                 np.abs(frame - self.color), axis=2)
             mask = pixel_differences < self.similarity
             frame[mask] = resized_image[mask]
+        return frame
+
+
+class ShakyCamEffect(Efect):
+    def __init__(self, start: float, end: float):
+        self.start = start
+        self.end = end
+
+    def apply(self, frame: MatLike, current_second: float) -> MatLike:
+        if self.start <= current_second < self.end:
+            shift_x = random.choice((-10, 10))
+            shift_y = random.choice((-10, 10))
+            frame = np.roll(frame, shift_x, axis=0)
+            frame = np.roll(frame, shift_y, axis=1)
+            frame = cv.resize(frame, (frame.shape[1], frame.shape[0]))
         return frame
