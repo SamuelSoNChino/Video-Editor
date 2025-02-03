@@ -75,7 +75,7 @@ class VideoEditor:
                             final_video.write(frame)
                             if show_preview and frame_number % 10 == 0:
                                 cv.imshow("frame", frame)
-                                cv.waitKey(1000)
+                                cv.waitKey(round(1000 / frame_rate * 10))
                             frames_to_process -= 1
                             frame_number += 1
                             if short:
