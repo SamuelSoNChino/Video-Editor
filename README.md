@@ -152,7 +152,7 @@ Or using methods individually in Python interpreter:
 
     `short`: Removes similar frames to reduce file size.
 
-    `show_preview`: Enables frame preview during video rendering.
+    `show_preview`: Enables frame preview during video rendering. (Hold Q key for fast-forward)
 
 
 ## Implementation Details
