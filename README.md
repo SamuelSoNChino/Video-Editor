@@ -64,7 +64,7 @@ Or using methods individually in Python interpreter:
     >>> ve.render("final_output.mp4", width=1280, height=720, framerate=30)
 
 
-### Chainable Editing Methods
+## Chainable Editing Methods
 
 - `add_video(path: str)`
 
