@@ -1,0 +1,4 @@
+*.mp4
+*.png
+__pycache__/
+.mypy_cache/
