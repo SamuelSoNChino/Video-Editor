@@ -14,7 +14,7 @@ class Effect():
         self.end = end
 
     def applies_to(self, current_second: float) -> bool:
-        return self.applies_to(current_second)
+        return self.start <= current_second < self.end
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
         raise NotImplementedError(
