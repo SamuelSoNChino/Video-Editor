@@ -7,11 +7,18 @@ import numpy as np
 Color = tuple[int, int, int]
 Position = tuple[float, float, float, float]
 
-# TODO Urob override metodu apply
-
 
 class Effect():
-    pass
+    def __init__(self, start: float, end: float):
+        self.start = start
+        self.end = end
+
+    def applies_to(self, current_second: float) -> bool:
+        return self.applies_to(current_second)
+
+    def apply(self, frame: MatLike, current_second: float) -> MatLike:
+        raise NotImplementedError(
+            "Effect subclasses must implement 'apply' method")
 
 
 class EffectRenderer():
@@ -19,10 +26,9 @@ class EffectRenderer():
         self.effect_queue = effect_queue
 
     def render_frame(self, frame: MatLike, current_second: float) -> MatLike:
-        frame_copy = np.copy(frame)
         for effect in self.effect_queue:
-            frame_copy = effect.apply(frame_copy, current_second)
-        return frame_copy
+            frame = effect.apply(frame, current_second)
+        return frame
 
 
 class GrayscaleEffect(Effect):
@@ -31,7 +37,7 @@ class GrayscaleEffect(Effect):
         self.end = end
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
             frame = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)
         return frame
@@ -50,7 +56,7 @@ class ChromakeyEffect(Effect):
             print(f'ERROR: Image at: {image_path} not found.')
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             if self.image is None:
                 return frame  # Skip if image is not loaded
             resized_image = cv.resize(self.image,
@@ -69,7 +75,7 @@ class ShakyCamEffect(Effect):
         self.end = end
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             shift_x = random.choice((-10, 10))
             shift_y = random.choice((-10, 10))
             frame = np.roll(frame, shift_x, axis=0)
@@ -90,7 +96,7 @@ class ImageEffect(Effect):
             print(f'ERROR: Image at: {image_path} not found.')
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             if self.image is None:
                 return frame
 
@@ -121,7 +127,7 @@ class ZoomEffect(Effect):
         self.position = position  # (x_min, y_min, x_max, y_max)
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
 
             frame_height, frame_width = frame.shape[:2]
             x_min = round(self.position[0] * frame_width)
@@ -143,7 +149,7 @@ class FlipEffect(Effect):
         self.axis = axis
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             frame = cv.flip(frame, self.axis)
         return frame
 
@@ -155,7 +161,7 @@ class RotationEffect(Effect):
         self.rotation = rotation
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             center = (frame.shape[1] / 2, frame.shape[0] / 2)
             matrix = cv.getRotationMatrix2D(center, self.rotation, 1)
             rotated_frame = cv.warpAffine(frame, matrix,
@@ -176,7 +182,7 @@ class BlurEffect(Effect):
         self.intensity = intensity
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             kernel_size = self.intensity + 2
             kernel = np.ones((kernel_size, kernel_size),
                              np.uint8) / (kernel_size ** 2)
@@ -190,7 +196,7 @@ class GlitchEffect(Effect):
         self.end = end
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             shift = random.randint(-2, 2)
             rolled_frame = np.roll(frame, shift, axis=2)
             block_size_x = frame.shape[1] // 10
@@ -211,7 +217,7 @@ class ScanLinesEffect(Effect):
         self.end = end
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             shift = random.randint(0, 3)
             for i in range(shift, frame.shape[0]):
                 scan_line = np.random.randint(0, 256,
@@ -230,7 +236,7 @@ class SnowEffect(Effect):
         self.end = end
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
-        if self.start <= current_second < self.end:
+        if self.applies_to(current_second):
             gray_snow = np.random.randint(0, 256, frame.shape[:2],
                                           dtype=np.uint8)
             frame = cv.cvtColor(gray_snow, cv.COLOR_GRAY2BGR)
