@@ -53,7 +53,8 @@ class ChromakeyEffect(Effect):
         self.similarity = similarity
         self.image = cv.imread(image_path, cv.IMREAD_UNCHANGED)
         if self.image is None:
-            print(f'ERROR: Image at: {image_path} not found.')
+            raise FileNotFoundError(
+                f'ERROR: Image at: {image_path} not found.')
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
         if self.applies_to(current_second):
@@ -93,7 +94,8 @@ class ImageEffect(Effect):
         self.position = position  # (x_min, y_min, x_max, y_max)
         self.image = cv.imread(image_path, cv.IMREAD_UNCHANGED)
         if self.image is None:
-            print(f'ERROR: Image at: {image_path} not found.')
+            raise FileNotFoundError(
+                f'ERROR: Image at: {image_path} not found.')
 
     def apply(self, frame: MatLike, current_second: float) -> MatLike:
         if self.applies_to(current_second):
