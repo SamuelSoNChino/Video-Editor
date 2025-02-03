@@ -1,6 +1,7 @@
 import cv2 as cv
 from utilities import are_frames_similar
 from effects import Position, \
+    Color, \
     Effect, \
     EffectRenderer, \
     GrayscaleEffect, \
@@ -91,8 +92,7 @@ class VideoEditor:
         return self
 
     def chromakey(self, start: float, end: float, image_path: str,
-                  color: tuple[int, int, int],
-                  similarity: int) -> 'VideoEditor':
+                  color: Color, similarity: int) -> 'VideoEditor':
         self.effect_queue.append(ChromakeyEffect(
             start, end, image_path, color, similarity))
         return self
