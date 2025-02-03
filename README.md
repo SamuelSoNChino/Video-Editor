@@ -4,11 +4,11 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
 
 [Quick Showcase of the project being used with Terminal](https://youtu.be/qym4_PWdxm8)
 
->This was one of my earlier projects, so there are parts I would refactor. For example, the monolithic `render` method. I might look into it in the future.
-
 ## Features
 
 - Chainable methods for clean, expressive editing pipelines.
+
+- Modular effects system for better maintainability.
 
 - Support for multiple effects, including:
 
@@ -21,6 +21,8 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
 - Add images or overlays to videos.
 
 - Optimize video size by removing similar consecutive frames.
+
+- Real-time preview during rendering.
 
 - Compatible with MP4 output format.
 
@@ -35,17 +37,32 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
 
     pip install numpy opencv-python
 
-## Quick Start
+## Example Pipelines
+
+Using the builder pattern:
 
     from video_editor import VideoEditor
-
-    # Example usage:
     VideoEditor() \
-        .add_video("input.mp4") \
-        .grayscale(0, 10) \
-        .shaky_cam(5, 7) \
-        .cut(15, 20) \
-        .render("output.mp4", 640, 360, 30)
+        .add_video("video1.mp4") \
+        .add_video("video2.mp4") \
+        .grayscale(0, 5) \
+        .chromakey(5, 10, "background.png", (0, 255, 0), 50) \
+        .shaky_cam(10, 15) \
+        .blur(15, 20, intensity=10) \
+        .render("final_output.mp4", width=1280, height=720, framerate=30)
+
+Or using methods individually in Python interpreter:
+
+    >>> from video_editor import VideoEditor
+    >>> ve = VideoEditor()
+    >>> ve.add_video("video1.mp4")
+    >>> ve.add_video("video2.mp4")
+    >>> ve.grayscale(0, 5)
+    >>> ve.chromakey(5, 10, "background.png", (0, 255, 0), 50)
+    >>> ve.shaky_cam(10, 15)
+    >>> ve.blur(15, 20, intensity=10)
+    >>> ve.render("final_output.mp4", width=1280, height=720, framerate=30)
+
 
 ### Chainable Editing Methods
 
@@ -127,7 +144,7 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
 
     Simulates snow-like static noise.
 
-- `render(path: str, width: int, height: int, framerate: float, short: bool = False)`
+- `render(path: str, width: int, height: int, framerate: float, short: bool = False, show_preview: bool = True)`
 
     Exports the final video to the specified path.
 
@@ -135,35 +152,15 @@ A lightweight Python-based video editing tool using OpenCV and NumPy. This progr
 
     `short`: Removes similar frames to reduce file size.
 
-## Example Pipelines
-
-Using the builder pattern:
-
-    VideoEditor() \
-        .add_video("video1.mp4") \
-        .add_video("video2.mp4") \
-        .grayscale(0, 5) \
-        .chromakey(5, 10, "background.png", (0, 255, 0), 50) \
-        .shaky_cam(10, 15) \
-        .blur(15, 20, intensity=10) \
-        .render("final_output.mp4", width=1280, height=720, framerate=30)
-
-Or using methods individually in Python interpreter:
-
-    >>> ve = VideoEditor()
-    >>> ve.add_video("video1.mp4")
-    >>> ve.add_video("video2.mp4")
-    >>> ve.grayscale(0, 5)
-    >>> ve.chromakey(5, 10, "background.png", (0, 255, 0), 50)
-    >>> ve.shaky_cam(10, 15)
-    >>> ve.blur(15, 20, intensity=10)
-    >>> ve.render("final_output.mp4", width=1280, height=720, framerate=30)
+    `show_preview`: Enables frame preview during video rendering.
 
 
 ## Implementation Details
 
 - Built using OpenCV for video processing and NumPy for efficient matrix operations.
 
-- Effects are applied frame-by-frame to ensure precision and flexibility.
+- Effects are implemented as separate classes for better modularity.
+
+- EffectRenderer applies effects dynamically during rendering.
 
 - Supports real-time preview of the rendering process (press q to exit preview).
