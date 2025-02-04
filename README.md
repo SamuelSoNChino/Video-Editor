@@ -93,8 +93,7 @@ Or using methods individually in Python interpreter:
 
 - `chromakey(start: float, end: float, img: str, color: Tuple[int, int, int], similarity: int)`
 
-    Replaces a specific color in the video with a given image.  
-    ![](effects_gifs/chromakey.gif)
+    Replaces a specific color in the video with a given image.
 
     Parameters:
 
@@ -103,6 +102,7 @@ Or using methods individually in Python interpreter:
     `color`: RGB tuple of the color to filter.  
 
     `similarity`: Threshold for color matching.  
+    ![](effects_gifs/chromakey.gif)
 
 - `shaky_cam(start: float, end: float)`
     
@@ -111,12 +111,12 @@ Or using methods individually in Python interpreter:
 
 - `zoom(start: float, end: float, pos: Tuple[float, float, float, float])`
 
-    Zooms into a specific area of the frame.  
-    ![](effects_gifs/zoom.gif)
+    Zooms into a specific area of the frame.
 
     Parameters:
 
-    `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.  
+    `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.    
+    ![](effects_gifs/zoom.gif)
 
 - `image(start: float, end: float, img: str, pos: Tuple[float, float, float, float])`
 
@@ -129,14 +129,14 @@ Or using methods individually in Python interpreter:
 
 - `flip(start: float, end: float, axis: Literal[0, 1, -1])`
 
-    Flips the video:  
-    ![](effects_gifs/flip.gif)
+    Flips the video:
 
     `0`: Vertically  
 
     `1`: Horizontally  
 
-    `-1`: Both  
+    `-1`: Both    
+    ![](effects_gifs/flip.gif)
 
 - `rotate(start: float, end: float, rotation: int)`
 
@@ -145,10 +145,10 @@ Or using methods individually in Python interpreter:
 
 - `blur(start: float, end: float, intensity: int)`
 
-    Blurs frames within the given time range.  
-    ![](effects_gifs/blur.gif)
+    Blurs frames within the given time range.
 
-    Recommended intensity: 1–50.  
+    Recommended intensity: 1–50.    
+    ![](effects_gifs/blur.gif)
 
 - `glitch(start: float, end: float)`
     
