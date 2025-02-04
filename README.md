@@ -74,76 +74,6 @@ Or using methods individually in Python interpreter:
 
     Trims a specific section of the video (in seconds).
 
-- `grayscale(start: float, end: float)`
-
-    Converts frames to grayscale within the specified time range.
-
-- `chromakey(start: float, end: float, img: str, color: Tuple[int, int, int], similarity: int)`
-
-    Replaces a specific color in the video with a given image.
-
-    Parameters:
-
-    `img`: Path to the replacement image.
-
-    `color`: RGB tuple of the color to filter.
-
-    `similarity`: Threshold for color matching.
-
-
-- `shaky_cam(start: float, end: float)`
-    
-    Adds a "shaky camera" effect to simulate motion.
-
-- `zoom(start: float, end: float, pos: Tuple[float, float, float, float])`
-
-    Zooms into a specific area of the frame.
-
-    Parameters:
-
-    `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.
-
-- `image(start: float, end: float, img: str, pos: Tuple[float, float, float, float])`
-
-
-    Overlays an image on the video at a specific position.
-
-    Parameters:
-
-    `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.
-
-- `flip(start: float, end: float, axis: Literal[0, 1, -1])`
-
-    Flips the video:
-
-    `0`: Vertically
-
-    `1`: Horizontally
-
-    `-1`: Both
-
-- `rotate(start: float, end: float, rotation: int)`
-
-    Rotates the video by a specified angle (in degrees).
-
-- `blur(start: float, end: float, intensity: int)`
-
-    Blurs frames within the given time range.
-
-    Recommended intensity: 1–50.
-
-- `glitch(start: float, end: float)`
-    
-    Adds a random glitch effect.
-
-- `scan_lines(start: float, end: float)`
-
-    Adds scan lines to create a retro effect.
-
-- `snow(start: float, end: float)`
-
-    Simulates snow-like static noise.
-
 - `render(path: str, width: int, height: int, framerate: float, short: bool = False, show_preview: bool = True)`
 
     Exports the final video to the specified path.
@@ -153,6 +83,85 @@ Or using methods individually in Python interpreter:
     `short`: Removes similar frames to reduce file size.
 
     `show_preview`: Enables frame preview during video rendering. (Hold Q key for fast-forward)
+
+- `grayscale(start: float, end: float)`
+
+    Converts frames to grayscale within the specified time range.  
+    ![](effects_gifs/grayscale.gif)
+
+- `chromakey(start: float, end: float, img: str, color: Tuple[int, int, int], similarity: int)`
+
+    Replaces a specific color in the video with a given image.  
+    ![](effects_gifs/chromakey.gif)
+
+    Parameters:
+
+    `img`: Path to the replacement image.  
+
+    `color`: RGB tuple of the color to filter.  
+
+    `similarity`: Threshold for color matching.  
+
+- `shaky_cam(start: float, end: float)`
+    
+    Adds a "shaky camera" effect to simulate motion.  
+    ![](effects_gifs/shaky_cam.gif)
+
+- `zoom(start: float, end: float, pos: Tuple[float, float, float, float])`
+
+    Zooms into a specific area of the frame.  
+    ![](effects_gifs/zoom.gif)
+
+    Parameters:
+
+    `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.  
+
+- `image(start: float, end: float, img: str, pos: Tuple[float, float, float, float])`
+
+    Overlays an image on the video at a specific position.  
+
+    Parameters:
+
+    `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.  
+    ![](effects_gifs/image.gif)  
+
+- `flip(start: float, end: float, axis: Literal[0, 1, -1])`
+
+    Flips the video:  
+    ![](effects_gifs/flip.gif)
+
+    `0`: Vertically  
+
+    `1`: Horizontally  
+
+    `-1`: Both  
+
+- `rotate(start: float, end: float, rotation: int)`
+
+    Rotates the video by a specified angle (in degrees).  
+    ![](effects_gifs/rotate.gif)
+
+- `blur(start: float, end: float, intensity: int)`
+
+    Blurs frames within the given time range.  
+    ![](effects_gifs/blur.gif)
+
+    Recommended intensity: 1–50.  
+
+- `glitch(start: float, end: float)`
+    
+    Adds a random glitch effect.  
+    ![](effects_gifs/glitch.gif)
+
+- `scan_lines(start: float, end: float)`
+
+    Adds scan lines to create a retro effect.  
+    ![](effects_gifs/scan_lines.gif)
+
+- `snow(start: float, end: float)`
+
+    Simulates snow-like static noise.  
+    ![](effects_gifs/snow.gif)
 
 
 ## Implementation Details
