@@ -89,6 +89,8 @@ Or using methods individually in Python interpreter:
 - `grayscale(start: float, end: float)`
 
     Converts frames to grayscale within the specified time range.  
+    
+    **Showcase:**
     ![](effects_gifs/grayscale.gif)
 
 - `chromakey(start: float, end: float, img: str, color: Tuple[int, int, int], similarity: int)`
