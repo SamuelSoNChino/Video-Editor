@@ -168,10 +168,66 @@ Or using methods individually in Python interpreter:
 
 ## Implementation Details
 
-- Built using OpenCV for video processing and NumPy for efficient matrix operations.
+### 1. `video_editor.py`:
+**Purpose**: A modular video editor that supports cutting, resizing, and applying multiple visual effects to videos.
 
-- Effects are implemented as separate classes for better modularity.
+**Technologies Used**:
 
-- EffectRenderer applies effects dynamically during rendering.
+- **OpenCV**: Handles video frame processing, resizing, and rendering effects.
 
-- Supports real-time preview of the rendering process (press q to exit preview).
+- **NumPy**: Efficiently manages frame data and optimizations.
+
+- **Custom Effect Modules**: Provides a range of visual effects.
+
+**Key Features**:
+
+- Loads multiple video files for sequential editing.
+
+- Supports cutting specific time segments.
+
+- Applies effects.
+
+- Resizes frames to a specified width and height.
+
+- Writes processed frames to an output video file.
+
+- Optimizes rendering by skipping similar frames if `short=True`.
+
+- Includes an optional real-time preview of the processed video
+
+### 2. `Effect.py`:
+
+**Purpose**: Provides a framework for applying various visual effects to video frames during processing.
+
+**Technologies Used**:
+
+- **OpenCV**: Performs image transformations, including color manipulation, blurring, rotation, and glitch effects.
+
+- **NumPy**: Handles efficient pixel manipulation and matrix operations for effect processing.
+
+- **Random Module**: Introduces randomness in effects such as shaky cam, glitch, and scan lines.
+
+**Key Features**:
+
+- Effect base class defines a standard interface for all effects.
+
+- EffectRenderer applies a queue of effects to video frames dynamically.
+
+- Supports multiple visual effects, including grayscale, chromakey, shaky cam, zoom, flip, rotation, blur, glitch, scan lines, and snow.
+
+- Applies effects only within specified time intervals.
+Optimized for real-time frame-by-frame processing.
+
+### 3. `utilites.py`:
+
+**Purpose**: Compares two video frames to determine their similarity based on pixel differences.
+
+**Technologies Used**:
+
+- **NumPy**: Performs efficient pixel-wise comparison and calculates the total difference.
+
+**Key Features:**
+
+- Returns a boolean indicating if frames are similar based on a threshold.
+
+- Efficient for real-time video processing.
