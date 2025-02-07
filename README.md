@@ -2,7 +2,7 @@
 
 A lightweight Python-based video editing tool using OpenCV and NumPy. This program provides a simple interface for applying basic video effects, trimming, and exporting videos. Designed with a builder pattern, the VideoEditor class allows for seamless method chaining, making video editing straightforward and intuitive.
 
-[Quick Showcase in Terminal](https://youtu.be/qym4_PWdxm8)
+[2 Minute Quick Showcase in Terminal](https://youtu.be/qym4_PWdxm8)
 
 [Previews of all the effects](#chainable-editing-methods)
 
