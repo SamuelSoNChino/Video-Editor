@@ -90,7 +90,7 @@ Or using methods individually in Python interpreter:
 
     Converts frames to grayscale within the specified time range.  
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/grayscale.gif)
 
@@ -107,7 +107,7 @@ Or using methods individually in Python interpreter:
     `similarity`: Threshold for color matching.  
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/chromakey.gif)
 
@@ -116,7 +116,7 @@ Or using methods individually in Python interpreter:
     Adds a "shaky camera" effect to simulate motion.  
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/shaky_cam.gif)
 
@@ -129,7 +129,7 @@ Or using methods individually in Python interpreter:
     `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.    
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/zoom.gif)
 
@@ -142,7 +142,7 @@ Or using methods individually in Python interpreter:
     `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.  
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/image.gif)  
 
@@ -157,7 +157,7 @@ Or using methods individually in Python interpreter:
     `-1`: Both    
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/flip.gif)
 
@@ -166,7 +166,7 @@ Or using methods individually in Python interpreter:
     Rotates the video by a specified angle (in degrees).  
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/rotate.gif)
 
@@ -175,7 +175,7 @@ Or using methods individually in Python interpreter:
     Blurs frames within the given time range (recommended intensity: 1–50)    
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/blur.gif)
 
@@ -184,7 +184,7 @@ Or using methods individually in Python interpreter:
     Adds a random glitch effect.  
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/glitch.gif)
 
@@ -193,7 +193,7 @@ Or using methods individually in Python interpreter:
     Adds scan lines to create a retro effect.  
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/scan_lines.gif)
 
@@ -202,7 +202,7 @@ Or using methods individually in Python interpreter:
     Simulates snow-like static noise.  
       
     
-    **Showcase:**
+    **Preview:**
     
     ![](effects_gifs/snow.gif)
 
