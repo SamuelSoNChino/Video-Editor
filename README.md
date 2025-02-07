@@ -80,7 +80,7 @@ Or using methods individually in Python interpreter:
 
     Exports the final video to the specified path.
 
-    Parameters:
+    **Parameters**:
 
     `short`: Removes similar frames to reduce file size.
 
@@ -91,24 +91,33 @@ Or using methods individually in Python interpreter:
     Converts frames to grayscale within the specified time range.  
     
     **Showcase:**
+    
     ![](effects_gifs/grayscale.gif)
 
 - `chromakey(start: float, end: float, img: str, color: Tuple[int, int, int], similarity: int)`
 
     Replaces a specific color in the video with a given image.
 
-    Parameters:
+    **Parameters**:
 
     `img`: Path to the replacement image.  
 
     `color`: RGB tuple of the color to filter.  
 
     `similarity`: Threshold for color matching.  
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/chromakey.gif)
 
 - `shaky_cam(start: float, end: float)`
     
     Adds a "shaky camera" effect to simulate motion.  
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/shaky_cam.gif)
 
 - `zoom(start: float, end: float, pos: Tuple[float, float, float, float])`
@@ -118,15 +127,23 @@ Or using methods individually in Python interpreter:
     Parameters:
 
     `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.    
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/zoom.gif)
 
 - `image(start: float, end: float, img: str, pos: Tuple[float, float, float, float])`
 
     Overlays an image on the video at a specific position.  
 
-    Parameters:
+    **Parameters**:
 
     `pos`: Tuple representing (x_start, y_start, x_end, y_end) as percentages.  
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/image.gif)  
 
 - `flip(start: float, end: float, axis: Literal[0, 1, -1])`
@@ -138,33 +155,55 @@ Or using methods individually in Python interpreter:
     `1`: Horizontally  
 
     `-1`: Both    
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/flip.gif)
 
 - `rotate(start: float, end: float, rotation: int)`
 
     Rotates the video by a specified angle (in degrees).  
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/rotate.gif)
 
 - `blur(start: float, end: float, intensity: int)`
 
-    Blurs frames within the given time range.
-
-    Recommended intensity: 1–50.    
+    Blurs frames within the given time range (recommended intensity: 1–50)    
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/blur.gif)
 
 - `glitch(start: float, end: float)`
     
     Adds a random glitch effect.  
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/glitch.gif)
 
 - `scan_lines(start: float, end: float)`
 
     Adds scan lines to create a retro effect.  
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/scan_lines.gif)
 
 - `snow(start: float, end: float)`
 
     Simulates snow-like static noise.  
+      
+    
+    **Showcase:**
+    
     ![](effects_gifs/snow.gif)
 
 
